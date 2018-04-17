@@ -10,6 +10,12 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            GameField gameField = new GameField(0, 0, '+');
+            gameField.Draw();
+            Console.ReadKey();
+
+
         }
+
     }
 }
