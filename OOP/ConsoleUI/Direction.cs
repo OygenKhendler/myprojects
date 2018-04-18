@@ -8,6 +8,6 @@ namespace ConsoleUI
 {
     class Direction
     {
-        public enum _direction {up, right, downm, left };
+        public enum _direction {UP, RIGTH, DOWN, LEFT };
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleUI
@@ -9,16 +10,14 @@ namespace ConsoleUI
     class Snake : Point
     {
         List<Point> snake = new List<Point>();
+        int newX=1;
+        int newY=0;
 
-        public Snake(int xPos, int yPos, char symbol) : base(xPos, yPos, symbol)
+        public Snake(int xPos, int yPos, char symbol ) : base(xPos, yPos, symbol)
         {
             LoadSnake();
             Draw();
 
-            while (true)
-            {
-                Move();
-            }
                       
         }
 
@@ -31,17 +30,47 @@ namespace ConsoleUI
            }
         }
 
-        public void Move()
+        public void Move(ConsoleKey key)
         {
             Point oldHead = snake.Last();
             Point tail = snake.First();
 
-            snake.Add(new Point(oldHead.xPos + 1, oldHead.yPos, symbol));
+          
+            switch (key)
+            {
+               
+                case ConsoleKey.LeftArrow:
+                    if (newX == 1) break;
+                    newX = -1;
+                    newY = 0;
+                    break;
+                case ConsoleKey.UpArrow:
+                    if (newY == 1) break;
+                    newY = -1;
+                    newX = 0;
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (newY == -1) break;
+                    newX = 1;
+                    newY = 0;
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (newY == -1) break;
+                    newY = 1;
+                    newX = 0;
+                    break;
+                default:
+                    break;
+            }
+
+            snake.Add(new Point(oldHead.xPos + newX, oldHead.yPos+ newY, symbol));
             DrawHead(snake.Last());
             snake.Remove(tail);
             RemoveTail(tail);
+            Thread.Sleep(100);
 
         }
+
 
         private void DrawHead(Point head)
         {
