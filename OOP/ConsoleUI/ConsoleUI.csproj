@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Direction.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />

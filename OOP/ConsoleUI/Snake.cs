@@ -8,23 +8,61 @@ namespace ConsoleUI
 {
     class Snake : Point
     {
+        List<Point> snake = new List<Point>();
+
         public Snake(int xPos, int yPos, char symbol) : base(xPos, yPos, symbol)
         {
-            this.xPos = xPos;
-            this.yPos = yPos;
-            this.symbol = symbol;
+            LoadSnake();
+            Draw();
+
+            while (true)
+            {
+                Move();
+            }
+                      
         }
 
         public void LoadSnake()
         {
-            List<int> xPosSnake = new List<int>();
-            List<int> yPosSnake = new List<int>();
+           for(int i=0; i<5;i++)
+           {
+                snake.Add(new Point(xPos,yPos,symbol));
+                xPos++;
+           }
+        }
 
-            for(int i=0; i<3;i++)
+        public void Move()
+        {
+            Point oldHead = snake.Last();
+            Point tail = snake.First();
+
+            snake.Add(new Point(oldHead.xPos + 1, oldHead.yPos, symbol));
+            DrawHead(snake.Last());
+            snake.Remove(tail);
+            RemoveTail(tail);
+
+        }
+
+        private void DrawHead(Point head)
+        {
+            Console.SetCursorPosition(head.xPos, head.yPos);
+            Console.Write(symbol);
+        }
+
+        private void RemoveTail(Point tail)
+        {
+            Console.SetCursorPosition(tail.xPos, tail.yPos);
+            Console.Write(' ');
+        }
+
+        public override void Draw()
+        {
+            foreach (Point p in snake)
             {
-
+                Console.SetCursorPosition(p.xPos, p.yPos);
+                Console.Write(p.symbol);
             }
-            
+           
         }
     }
 }

@@ -10,9 +10,6 @@ namespace ConsoleUI
     {
         public GameField(int xPos, int yPos, char symbol) : base(xPos, yPos, symbol)
         {
-            this.xPos = xPos;
-            this.yPos = yPos;
-            this.symbol = symbol;
             Console.SetWindowSize(100,50);
         }
 
