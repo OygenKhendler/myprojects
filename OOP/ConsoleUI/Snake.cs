@@ -10,15 +10,16 @@ namespace ConsoleUI
     class Snake : Point
     {
         List<Point> snake = new List<Point>();
-        int newX=1;
-        int newY=0;
+
+        public Direction _direction;
 
         public Snake(int xPos, int yPos, char symbol ) : base(xPos, yPos, symbol)
         {
             LoadSnake();
-            Draw();
-
-                      
+            foreach (Point p in snake)
+            {
+                p.Draw();
+            }     
         }
 
         public void LoadSnake()
@@ -30,68 +31,53 @@ namespace ConsoleUI
            }
         }
 
-        public void Move(ConsoleKey key)
+        public void Move()
         {
-            Point oldHead = snake.Last();
+            Point head = snake.Last();
             Point tail = snake.First();
+            Point newPoint = NewPoint(head);
 
-          
+            snake.Add(newPoint);
+            snake.Remove(tail);
+
+            newPoint.Draw();
+            tail.Remove();
+            
+            
+        }
+
+        public void OnButtonKey(ConsoleKey key)
+        {
             switch (key)
             {
-               
                 case ConsoleKey.LeftArrow:
-                    if (newX == 1) break;
-                    newX = -1;
-                    newY = 0;
+                    _direction = Direction.LEFT;
                     break;
                 case ConsoleKey.UpArrow:
-                    if (newY == 1) break;
-                    newY = -1;
-                    newX = 0;
+                    _direction = Direction.UP;
                     break;
                 case ConsoleKey.RightArrow:
-                    if (newY == -1) break;
-                    newX = 1;
-                    newY = 0;
+                    _direction = Direction.RIGHT;
                     break;
                 case ConsoleKey.DownArrow:
-                    if (newY == -1) break;
-                    newY = 1;
-                    newX = 0;
+                    _direction = Direction.DOWN;
                     break;
-                default:
-                    break;
+
             }
 
-            snake.Add(new Point(oldHead.xPos + newX, oldHead.yPos+ newY, symbol));
-            DrawHead(snake.Last());
-            snake.Remove(tail);
-            RemoveTail(tail);
-            Thread.Sleep(100);
-
+                
         }
-
-
-        private void DrawHead(Point head)
+        private Point NewPoint(Point point)
         {
-            Console.SetCursorPosition(head.xPos, head.yPos);
-            Console.Write(symbol);
+            Point tempPoint = new Point(point.xPos, point.yPos, symbol);
+            tempPoint.NewPoint(1, _direction);
+            Point newPoint = tempPoint;
+            return newPoint;
         }
 
-        private void RemoveTail(Point tail)
-        {
-            Console.SetCursorPosition(tail.xPos, tail.yPos);
-            Console.Write(' ');
-        }
 
-        public override void Draw()
-        {
-            foreach (Point p in snake)
-            {
-                Console.SetCursorPosition(p.xPos, p.yPos);
-                Console.Write(p.symbol);
-            }
-           
-        }
+      
+
+       
     }
 }

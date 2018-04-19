@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleUI
@@ -18,12 +19,25 @@ namespace ConsoleUI
             gameField.Draw();
 
             Snake snake = new Snake(Console.WindowWidth / 2, Console.WindowHeight / 2, '#');
-            do
+            while (true)
             {
-                snake.Move(Console.ReadKey().Key);
+                
+               snake.Move();
 
-            } while (Console.ReadKey().Key!=ConsoleKey.Escape);
-    
+               if (Console.KeyAvailable)
+               {  
+                    ConsoleKeyInfo consoleKey = Console.ReadKey();
+                    snake.OnButtonKey(consoleKey.Key);
+               }
+               
+                
+
+                Thread.Sleep(100);
+            }
+
+
+            Console.ReadKey();
+
         }
 
         //protected virtual void OnButtonDown()
