@@ -9,12 +9,16 @@ namespace ConsoleUI
 {
     class Snake : Point
     {
+        
         List<Point> snake = new List<Point>();
 
         public Direction _direction;
 
-        public Snake(int xPos, int yPos, char symbol ) : base(xPos, yPos, symbol)
+        
+
+        public Snake(int xPos, int yPos ) : base(xPos, yPos)
         {
+            
             LoadSnake();
             foreach (Point p in snake)
             {
@@ -26,7 +30,7 @@ namespace ConsoleUI
         {
            for(int i=0; i<5;i++)
            {
-                snake.Add(new Point(xPos,yPos,symbol));
+                snake.Add(new Point(xPos,yPos));
                 xPos++;
            }
         }
@@ -39,7 +43,7 @@ namespace ConsoleUI
 
             snake.Add(newPoint);
             snake.Remove(tail);
-
+           
             newPoint.Draw();
             tail.Remove();
             
@@ -69,11 +73,22 @@ namespace ConsoleUI
         }
         private Point NewPoint(Point point)
         {
-            Point tempPoint = new Point(point.xPos, point.yPos, symbol);
+            Point tempPoint = new Point(point.xPos, point.yPos);
             tempPoint.NewPoint(1, _direction);
             Point newPoint = tempPoint;
             return newPoint;
         }
+
+        public bool Colusion()
+        {
+            Point head = snake.Last();
+            for (int i = 0; i < snake.Count-2; i++)
+            {
+                if(head.Colusion(snake[i]))return true;
+            }
+            return false;
+        }
+        
 
 
       

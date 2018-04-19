@@ -10,14 +10,18 @@ namespace ConsoleUI
     {
         public int xPos;
         public int yPos;
-        public char symbol;
-        public bool colusion = false;
+        public char symbol='*';
 
-        public Point(int xPos, int yPos, char symbol)
+        public Point(int xPos, int yPos)
         {
             this.xPos = xPos;
             this.yPos = yPos;
-            this.symbol = symbol;
+            
+        }
+        public Point(Point point)
+        {
+            this.xPos = point.xPos;
+            this.yPos = point.yPos;
         }
 
         public virtual void Draw()
@@ -50,17 +54,14 @@ namespace ConsoleUI
                     break;   
             }
         }
-        public bool Colusion(Point p ,List<Point> points)
+        public bool Colusion(Point p )
         {
-            foreach (Point point in points)
-            {
-                if (p.xPos == point.xPos && p.yPos == point.yPos)
+                if (p.xPos ==  xPos && p.yPos == yPos)
                 {
-                    colusion = true;
+                    return true;
                 }
-                if (colusion) break;
-            }
-            return colusion;
+            return false;
+                
         }
 
     }

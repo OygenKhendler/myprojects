@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleUI
 {
-    public enum Direction {UP, RIGHT, DOWN, LEFT };
+    public enum Direction {RIGHT, UP , DOWN, LEFT };
+   
     
 }
