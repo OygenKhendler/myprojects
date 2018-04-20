@@ -16,17 +16,13 @@ namespace ConsoleUI
         public GameField(int xPos, int yPos) : base(xPos, yPos)
         {
             
-            Console.SetWindowSize(80,40);
+            Console.SetWindowSize(81,41);
+            
             
             LoadGameField();
-            foreach(Point field in verticalFieldLine)
-            {
-                field.Draw();
-            }
-            foreach (Point field in horizontalFieldLine)
-            {
-                field.Draw();
-            }
+            DrawGameField();
+           
+
         }
         public void LoadGameField()
         {
@@ -51,14 +47,33 @@ namespace ConsoleUI
 
             }
         }
-        public List<Point> GetVerticalPoints()
+        private void DrawGameField()
         {
-            return verticalFieldLine;
-        }
-        public List<Point> GetHorizontalPoints()
-        {
-            return horizontalFieldLine;
+            foreach (Point field in verticalFieldLine)
+            {
+                field.Draw();
+            }
+            foreach (Point field in horizontalFieldLine)
+            {
+                field.Draw();
+            }
         }
 
+        internal bool Colusion(Snake snake)
+        {
+            
+            foreach (var p in horizontalFieldLine)
+            {
+                if (p.Colusion(snake.snakeHead)) return true;
+
+            }
+            foreach (var p in verticalFieldLine)
+            {
+                if (p.Colusion(snake.snakeHead)) return true;
+
+            }
+            return false;
+        }
+    
     }
 }

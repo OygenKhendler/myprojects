@@ -10,8 +10,8 @@ namespace ConsoleUI
     class Snake : Point
     {
         
-        List<Point> snake = new List<Point>();
-
+        List<Point> points = new List<Point>();
+        public Point snakeHead;
         public Direction _direction;
 
         
@@ -20,7 +20,7 @@ namespace ConsoleUI
         {
             
             LoadSnake();
-            foreach (Point p in snake)
+            foreach (Point p in points)
             {
                 p.Draw();
             }     
@@ -30,21 +30,23 @@ namespace ConsoleUI
         {
            for(int i=0; i<5;i++)
            {
-                snake.Add(new Point(xPos,yPos));
+                points.Add(new Point(xPos,yPos));
                 xPos++;
            }
+            snakeHead = points.Last();
         }
 
         public void Move()
         {
-            Point head = snake.Last();
-            Point tail = snake.First();
+            Point head = points.Last();
+            Point tail = points.First();
             Point newPoint = NewPoint(head);
 
-            snake.Add(newPoint);
-            snake.Remove(tail);
+            points.Add(newPoint);
+            points.Remove(tail);
            
             newPoint.Draw();
+            snakeHead = newPoint;
             tail.Remove();
             
             
@@ -67,6 +69,8 @@ namespace ConsoleUI
                     _direction = Direction.DOWN;
                     break;
 
+
+
             }
 
                 
@@ -81,18 +85,31 @@ namespace ConsoleUI
 
         public bool Colusion()
         {
-            Point head = snake.Last();
-            for (int i = 0; i < snake.Count-2; i++)
+            Point head = points.Last();
+            for (int i = 0; i < points.Count-2; i++)
             {
-                if(head.Colusion(snake[i]))return true;
+                if(head.Colusion(points[i])) return true;
             }
             return false;
         }
-        
 
-
-      
-
+        public bool Aet(Food food)
+        {
+            Point head = points.Last();
+            if (head.Colusion(food.foodPoint))
+            {
+                points.Add(new Point(food.foodPoint));
+                return true;
+            }
+            
+            return false;
+        }
        
+
+
+
+
+
+
     }
 }
