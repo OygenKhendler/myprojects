@@ -39,10 +39,11 @@ namespace ConsoleUI
                 if (snake.Aet(food))
                 {
                     food.GreatFood();
+                    score++;
                     if (speed > 40)
                     {
                         speed -= 20;
-                        score++;
+                        
                     }
                     if (score==100)
                     {
